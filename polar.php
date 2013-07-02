@@ -5,6 +5,8 @@ $docs = array();
 if(trim($_GET['query'])!=''){
     $query = '@name '.trim($_GET['query']);
 }
+$latitude_deg = $_GET['latitude'];
+$longitude_deg = $_GET['longitude'];
 $latitude  = deg2rad($_GET['latitude']);
 $longitude  = deg2rad($_GET['longitude']);
 $maxdistance  = (int)$_GET['maxdistance'];
@@ -22,9 +24,9 @@ if(count($_GET)>0) {
     }
     
     if($latitude!=0 && $longitude!=0){
-        $geodist = ', GEODIST('.$latitude.', '.$longitude.',latitude,longitude) as distance ';
-        $where[] = ' distance < '.$maxdistance;
-        $order = 'ORDER BY distance ASC';
+        $geodist = ', SQRT(69.1*69.1*(latitude_deg - '.$latitude_deg.')*(latitude_deg - '.$latitude_deg.') + 53*53*(longitude_deg - '.$longitude_deg.')*(longitude_deg - '.$longitude_deg.')) as distance_miles';
+        $where[] = ' distance_miles < '.$maxdistance/1609;
+        $order = 'ORDER BY distance_miles ASC';
     }
 
     $sql = "SELECT *".$geodist." FROM ".$indexes." WHERE ".implode(' AND ',$where)."  ".$order." LIMIT 0,100";
@@ -47,7 +49,7 @@ $total_time = $meta['Value'];
 
 ?>
 <?php
-$title = 'Default Geo distance using havesine';
+$title = 'Geo distance with Polar flat-Earth';
 include 'template/header.php';
 ?>
 <div id="map"></div>
@@ -60,10 +62,10 @@ include 'template/header.php';
 		<div class="">
 			<div class="container">
 				<ul class="nav nav-pills">
-					<li class="active"><a href="index.php">Default Geo distance using havesine</a></li>
-                    <li><a href="poly_large.php">Search inside large polygon</a></li>
-                    <li><a href="poly_small.php">Search inside small polygon</a></li>
-                    <li><a href="polar.php">Geo distance with Polar flat-Earth</a></li>
+					<li><a href="index.php">Default Geo distance using havesine</a></li>
+                    <li ><a href="poly_large.php">Search inside large polygon</a></li>
+                    <li ><a href="poly_small.php">Search inside small polygon</a></li>
+                    <li class="active"><a href="polar.php">Geo distance with Polar flat-Earth</a></li>
 				</ul>
 				<header>
 					<h1>Simple geo search</h1>

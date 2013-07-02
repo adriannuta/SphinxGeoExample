@@ -67,10 +67,10 @@ include 'template/header.php';
 		<div class="">
 			<div class="container">
 				<ul class="nav nav-pills">
-					<li ><a href="index.php">Simple geo search</a></li>
+					<li><a href="index.php">Default Geo distance using havesine</a></li>
                     <li class="active"><a href="poly_large.php">Search inside large polygon</a></li>
-                    <li ><a href="poly_small.php">Search inside small polygon</a></li>
-
+                    <li><a href="poly_small.php">Search inside small polygon</a></li>
+                    <li><a href="polar.php">Geo distance with Polar flat-Earth</a></li>
 				</ul>
 				<header>
 					<h1>GEOPOLY2D/POLY2D on large polygon</h1>
