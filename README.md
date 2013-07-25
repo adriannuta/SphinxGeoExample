@@ -30,6 +30,10 @@ Generate the RT index
     $ php filldb.php
 poly_large.php and poly_small.php have the same functionality, except the polygons are different.   
 
+Live demo:
+-------------------------------------------
+http://sphinxdemos.adriannuta.com/SphinxGeoExample/
+
 License:
 -------------------------------------------
 Sphinx Samples  is free software, and is released under the terms of the GPL version 2 or (at your option) any later version.
