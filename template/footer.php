@@ -1,4 +1,14 @@
+<?php 
+switch ($output){
+    case 'mi': case 'miles':$maxdistance = $maxdistance*1600;break;
+    case 'km': case 'kilometers': $maxdistance = $maxdistance*1000;break;
+    case 'ft': case 'feet': $maxdistance = $maxdistance*0.3;break;
+}
+if(!isset($input)) {
+    $input = 'rad';
+}
 
+?>
 </div>
 <hr>
 <footer>
@@ -16,18 +26,18 @@
 	type="text/javascript" src="js/gmaps.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	latLng = new google.maps.LatLng(<?=rad2deg($latitude)?>, <?=rad2deg($longitude)?>);
+	latLng = new google.maps.LatLng(<?=($input!='deg' && $input!='degrees')?rad2deg($latitude):$latitude;?>, <?=($input!='deg' && $input!='degrees')?rad2deg($longitude):$longitude;?>);
     bounds = new google.maps.Circle({center: latLng, radius: <?=$maxdistance/4?>}).getBounds();
 	 map = new GMaps({
 	        div: '#map',
-	        lat: <?=rad2deg($latitude)?>,
-	        lng: <?=rad2deg($longitude)?>
+	        lat: <?=($input!='deg' && $input!='degrees')?rad2deg($latitude):$latitude;?>,
+	        lng: <?=($input!='deg' && $input!='degrees')?rad2deg($longitude):$longitude;?>
 	      });
      map.fitBounds(bounds);
      <?php if(isset($_GET['latitude']) && isset($_GET['longitude'])):?>
      map.addMarker({
-	        lat: <?=rad2deg($latitude)?>,
-	    	lng: <?=rad2deg($longitude)?>,
+	        lat: <?=($input!='deg' && $input!='degrees')?rad2deg($latitude):$latitude;?>,
+	    	lng: <?=($input!='deg' && $input!='degrees')?rad2deg($longitude):$longitude;?>,
 	    	title: 'Starting point',
 	    	animation: google.maps.Animation.BOUNCE,
 	    	infoWindow: {content:'<p>Starting point</p>'} 

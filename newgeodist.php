@@ -5,10 +5,13 @@ $docs = array();
 if(trim($_GET['query'])!=''){
     $query = '@name '.trim($_GET['query']);
 }
-$latitude  = deg2rad($_GET['latitude']);
-$longitude  = deg2rad($_GET['longitude']);
+$latitude  = $_GET['latitude'];
+$longitude  = $_GET['longitude'];
 $maxdistance  = (int)$_GET['maxdistance'];
 $state_code = trim($_GET['state_code']);
+$input = $_GET['input'];
+$output = $_GET['output'];
+$method = $_GET['method'];
 $indexes = 'geodemo';
 $geodist = '';
 $where = array();
@@ -22,7 +25,11 @@ if(count($_GET)>0) {
     }
     
     if($latitude!=0 && $longitude!=0){
-        $geodist = ', GEODIST('.$latitude.', '.$longitude.',latitude,longitude) as distance ';
+        if($input!='deg' && $input!='degrees'){
+            $geodist = ', GEODIST('.$latitude.', '.$longitude.',latitude,longitude,{in='.$input.',out='.$output.',method='.$method.'}) as distance ';
+        }else{
+            $geodist = ', GEODIST('.$latitude.', '.$longitude.',latitude_deg,longitude_deg,{in='.$input.',out='.$output.',method='.$method.'}) as distance ';
+        }
         $where[] = ' distance < '.$maxdistance;
         $order = 'ORDER BY distance ASC';
     }
@@ -47,7 +54,7 @@ $total_time = $meta['Value'];
 
 ?>
 <?php
-$title = 'Default Geo distance using havesine';
+$title = 'New GEODIST() options (2.2+)';
 include 'template/header.php';
 ?>
 <div id="map"></div>
@@ -60,11 +67,11 @@ include 'template/header.php';
 		<div class="">
 			<div class="container">
 				<ul class="nav nav-pills">
-					<li class="active"><a href="index.php">Default Geo distance using havesine</a></li>
+					<li ><a href="index.php">Default Geo distance using havesine</a></li>
                     <li><a href="poly_large.php">Search inside large polygon</a></li>
                     <li><a href="poly_small.php">Search inside small polygon</a></li>
                     <li><a href="polar.php">Geo distance with Polar flat-Earth</a></li>
-                    <li><a href="newgeodist.php">New GEODIST() options (2.2+)</a></li>
+                    <li class="active"><a href="newgeodist.php">New GEODIST() options (2.2+)</a></li>
 				</ul>
 				<header>
 					<h1>Simple geo search</h1>
@@ -106,14 +113,15 @@ include 'template/header.php';
 									<div class="controls">
 										<select name="maxdistance" id="maxdistance">
 											<?php 
-											$options = array(500 => '500',
-                                                             1000 => '1km',
-                                                             10000 => '10km',
-                                                             50000 => '50km',
-                                                             100000 => '100km',
-                                                             250000 => '250km',
-                                                             500000 => '500km',
-                                                             700000 => '700km',
+											$options = array(10 => 10,
+                                                             50 => 50,
+                                                             100 => 100,
+                                                             500 => 500,
+                                                             1000 => 1000,
+                                                             5000 => 5000,
+                                                             10000 => 10000,
+                                                             25000 => 25000,
+                                                             50000 => 50000,
 										                    );
                                                      
 										?>
@@ -124,6 +132,64 @@ include 'template/header.php';
 
 									</div>
 								</div>
+								
+								<div class="control-group">
+									<label class="control-label" for="input">Input type</label>
+									<div class="controls">
+										<select name="input" id="input">
+											<?php 
+											$options = array('deg' => 'deg',
+                                                             'degrees' => 'degrees',
+                                                             'rad' => 'rad',
+                                                             'radians' => 'radians',
+               										         );
+										?>
+										<?php foreach($options as $value=>$option):?>
+										    <option value="<?=$value?>" <?=($value==$input)?'selected':'';?>><?=$option?></option>
+										<?php endforeach;?>
+										</select>
+									</div>
+								</div>
+								
+								<div class="control-group">
+									<label class="control-label" for="output">Output type</label>
+									<div class="controls">
+										<select name="output" id="output">
+											<?php 
+											$options = array('m' => 'm',
+                                                             'meters' => 'meters',
+                                                             'km' => 'km',
+                                                             'kilometers' => 'kilometers',
+                                                             'ft' => 'ft',
+                                                             'feet' => 'feet',
+                                                             'mi' => 'mi',
+                                                             'miles' => 'miles'
+               										           );
+										?>
+										<?php foreach($options as $value=>$option):?>
+										    <option value="<?=$value?>" <?=($value==$output)?'selected':'';?>><?=$option?></option>
+										<?php endforeach;?>
+										</select>
+									</div>
+								</div>										
+								
+								<div class="control-group">
+									<label class="control-label" for="method">Method</label>
+									<div class="controls">
+										<select name="method" id="method">
+											<?php 
+											$options = array(
+                                                             'adaptive' => 'adaptive(faster,default in 2.2+)',
+                                                             'haversine' => 'haversine(slower,default in older versions)',
+               										           );
+										?>
+										<?php foreach($options as $value=>$option):?>
+										    <option value="<?=$value?>" <?=($value==$method)?'selected':'';?>><?=$option?></option>
+										<?php endforeach;?>
+										</select>
+									</div>
+								</div>	
+																								
 								<div class="control-group">
 									<label class="control-label" for="query">State code(optional)</label>
 									<div class="controls">

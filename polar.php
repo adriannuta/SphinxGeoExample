@@ -66,6 +66,7 @@ include 'template/header.php';
                     <li ><a href="poly_large.php">Search inside large polygon</a></li>
                     <li ><a href="poly_small.php">Search inside small polygon</a></li>
                     <li class="active"><a href="polar.php">Geo distance with Polar flat-Earth</a></li>
+                    <li><a href="newgeodist.php">New GEODIST() options (2.2+)</a></li>
 				</ul>
 				<header>
 					<h1>Simple geo search</h1>
