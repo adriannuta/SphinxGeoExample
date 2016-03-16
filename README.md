@@ -32,11 +32,11 @@ poly_large.php and poly_small.php have the same functionality, except the polygo
 
 Live demo:
 -------------------------------------------
-http://sphinxdemos.adriannuta.com/SphinxGeoExample/
+http://demos.sphinxsearch.com/SphinxGeoExample/
 
 License:
 -------------------------------------------
 Sphinx Samples  is free software, and is released under the terms of the GPL version 2 or (at your option) any later version.
 
 Sphinx website : http://sphinxsearch.com/  
-Sphinx read-only repository :https://code.google.com/p/sphinxsearch/ 
+Sphinx read-only repository : https://github.com/sphinxsearch/sphinx 
