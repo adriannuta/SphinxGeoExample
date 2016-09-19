@@ -13,7 +13,7 @@ if(!isset($input)) {
 <hr>
 <footer>
 
-	<p>Copyright &copy; 2001-2013, Sphinx Technologies Inc.</p>
+	<p>Copyright &copy; 2013-2016, Sphinx Technologies Inc.</p>
 </footer>
 </div>
 <script
