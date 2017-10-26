@@ -1,15 +1,15 @@
 SphinxGeoExample
 =========================
 
-These samples illustrate geographic searching using Sphinx search.     
-Sphinx querying is made via SphinxQL using PDO driver.    
+These samples illustrate geographic searching using Manticore/Sphinx search.     
+Querying is made via SphinxQL using PDO driver.    
 Data from geonames.org is used as source.     
 
 
 Requirements :
 -------------------------------------------
 LAMP  
-Sphinx search  **2.1.1-beta** or greater
+Manticore or Sphinx search  **2.1.1-beta** or greater
 PHP with PDO mysql  
 
 Installation :
@@ -30,13 +30,14 @@ Generate the RT index
     $ php filldb.php
 poly_large.php and poly_small.php have the same functionality, except the polygons are different.   
 
-Live demo:
+Live demo using Sphinx:
 -------------------------------------------
 http://demos.sphinxsearch.com/SphinxGeoExample/
 
 License:
 -------------------------------------------
 Sphinx Samples  is free software, and is released under the terms of the GPL version 2 or (at your option) any later version.
-
+Manticore website : https://manticoresearch.com/
+Manticore repository : https://github.com/manticoresoftware/manticore
 Sphinx website : http://sphinxsearch.com/  
 Sphinx read-only repository : https://github.com/sphinxsearch/sphinx 
